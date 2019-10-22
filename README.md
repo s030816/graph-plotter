@@ -1,2 +1,1 @@
-# graph-plotter
-in progress
+Old OpenGL + winapi
