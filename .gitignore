@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+/Debug
+/GraphPlotter/Debug/GraphPlotter.tlog
+/GraphPlotter/Debug
+/ipch/GRAPHPLOTTER-25ee415f
+/GraphPlotter.VC.db
