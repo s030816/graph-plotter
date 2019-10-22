@@ -68,8 +68,7 @@ BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND ph
 	this->hDC = GetDC(this->hWnd);
 
 	PIXELFORMATDESCRIPTOR pfd;
-	/* there is no guarantee that the contents of the stack that become
-	the pfd are zeroed, therefore _make sure_ to clear these bits. */
+
 	memset(&pfd, 0, sizeof(pfd));
 	pfd.nSize = sizeof(pfd);
 	pfd.nVersion = 1;
@@ -82,14 +81,12 @@ BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND ph
 
 	int pf = ChoosePixelFormat(this->hDC, &pfd);
 	if (pf == 0) {
-		this->errorMsg("ChoosePixelFormat() failed:  "
-			"Cannot find a suitable pixel format.");
+		this->errorMsg("ChoosePixelFormat() error: 83");
 		return 0;
 	}
 
 	if (SetPixelFormat(this->hDC, pf, &pfd) == FALSE) {
-		this->errorMsg("SetPixelFormat() failed:  "
-			"Cannot set format specified.");
+		this->errorMsg("SetPixelFormat() error:  89");
 		return 0;
 	}
 

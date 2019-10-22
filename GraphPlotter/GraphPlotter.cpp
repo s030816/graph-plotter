@@ -123,33 +123,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    {
       return FALSE;
    }
-   /*
-   hDC = GetDC(hWnd);
 
-   memset(&pfd, 0, sizeof(pfd));
-   pfd.nSize = sizeof(pfd);
-   pfd.nVersion = 1;
-   pfd.dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL;
-   pfd.iPixelType = PFD_TYPE_RGBA;
-   pfd.cColorBits = 32;
-
-   int pf = ChoosePixelFormat(hDC, &pfd);
-   if (pf == 0) {
-	   MessageBoxA(NULL, "ChoosePixelFormat() failed:  "
-		   "Cannot find a suitable pixel format.", "Error", MB_OK);
-	   return 0;
-   }
-
-   if (SetPixelFormat(hDC, pf, &pfd) == FALSE) {
-	   MessageBoxA(NULL, "SetPixelFormat() failed:  "
-		   "Cannot set format specified.", "Error", MB_OK);
-	   return 0;
-   }
-
-   DescribePixelFormat(hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
-
-   ReleaseDC(hWnd, hDC);
-   */
    ShowWindow(hWND, nCmdShow);
    UpdateWindow(hWND);
 
