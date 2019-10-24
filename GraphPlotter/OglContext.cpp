@@ -48,13 +48,9 @@ ATOM OglContext::RegisterWinClass(WNDPROC WndProc)
 
 BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND phwnd)
 {
-	/*
-	this->hWnd = CreateWindowA("test", "test2", WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
-		CW_USEDEFAULT, 0, width, height, phwnd, nullptr, this->hInstance, nullptr);
-	*/
-	
 	this->hWnd = CreateWindowW(this->szWindowClass, this->szTitle, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
 		CW_USEDEFAULT, 0, width, height, phwnd, nullptr, this->hInstance, nullptr);
+
 	if (!(this->hWnd))
 	{
 		this->errorMsg("No hwnd");
@@ -81,16 +77,16 @@ BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND ph
 
 	int pf = ChoosePixelFormat(this->hDC, &pfd);
 	if (pf == 0) {
-		this->errorMsg("ChoosePixelFormat() error: 83");
+		this->errorMsg("ChoosePixelFormat error: 83");
 		return 0;
 	}
 
 	if (SetPixelFormat(this->hDC, pf, &pfd) == FALSE) {
-		this->errorMsg("SetPixelFormat() error:  89");
+		this->errorMsg("SetPixelFormat error:  89");
 		return 0;
 	}
 
-	//DescribePixelFormat(this->hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
+	DescribePixelFormat(this->hDC, pf, sizeof(PIXELFORMATDESCRIPTOR), &pfd);
 
 	//ReleaseDC(this->hWnd, this->hDC);
 
@@ -105,15 +101,14 @@ void
 display()
 {
 	//MessageBoxA(NULL, "display", "Error", MB_OK);
-	/* rotate a triangle around */
 	glClear(GL_COLOR_BUFFER_BIT);
-	glBegin(GL_TRIANGLES);
+	glBegin(GL_LINES);
 	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex2i(0, 1);
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glVertex2i(-1, -1);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex2i(1, -1);
+	glVertex2i(-1, 0.5);
+	glVertex2i(1, 0.5);
+
+	glVertex2i(0.5, 1);
+	glVertex2i(0.5, -1);
 	glEnd();
 	//glFlush();
 }
@@ -131,11 +126,10 @@ LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
-		// TODO: Add any drawing code that uses hdc here...
 		display();
 		SwapBuffers(hdc);
-		BeginPaint(hWnd, &ps);
-		EndPaint(hWnd, &ps);
+		//BeginPaint(hWnd, &ps);
+		//EndPaint(hWnd, &ps);
 	}
 	break;
 	case WM_SIZE:
