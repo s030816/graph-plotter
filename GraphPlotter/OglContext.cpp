@@ -132,9 +132,9 @@ void OglContext::display(void)
 
 void OglContext::initGraph(void)
 {
-	GLfloat i = -(this->width/2);
-	GLfloat limit = 1.0f + 1.0f / width;
-	GLfloat increment = 1.0f / width;
+	GLfloat i = -(this->width/2.0f);
+	GLfloat limit = 1.0f + 1.0f / this->width;
+	GLfloat increment = 1.0f / this->width;
 	this->graph.clear();
 	for (GLfloat x = -1.0f; x < 1.005f; x += increment, i += 1.0f)
 	{
@@ -156,6 +156,16 @@ void OglContext::incMultiplier(void)
 	this->initGraph();
 	this->display();
 	PostMessage(this->hWnd, WM_PAINT, 0, 0);
+}
+
+std::string OglContext::getWidth(void)
+{
+	return std::to_string(this->width);
+}
+
+std::string OglContext::getHeight(void)
+{
+	return std::to_string(this->height);
 }
 
 LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

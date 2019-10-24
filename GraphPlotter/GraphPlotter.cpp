@@ -6,11 +6,13 @@
 #include "OglContext.h"
 
 #define MAX_LOADSTRING 100
+#define MAX_INFO 4096
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
+WCHAR aboutInfo[MAX_INFO];
 HWND hWND;
 OglContext *ogl;
 
@@ -35,6 +37,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_GRAPHPLOTTER, szWindowClass, MAX_LOADSTRING);
+	LoadStringW(hInstance, IDS_STRING104, aboutInfo, MAX_INFO);
     MyRegisterClass(hInstance);
 	ogl->RegisterWinClass(&OglProc);
 
@@ -200,6 +203,7 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_INITDIALOG:
+		SetDlgItemText(hDlg, IDC_STATIC, L"Copyright (C) <year>  <name of author>");
         return (INT_PTR)TRUE;
 
     case WM_COMMAND:
@@ -220,8 +224,9 @@ INT_PTR CALLBACK Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 	switch (message)
 	{
 	case WM_INITDIALOG:
+		SetDlgItemTextA(hDlg, IDC_EDIT1, ogl->getWidth().c_str());
+		SetDlgItemTextA(hDlg, IDC_EDIT2, ogl->getHeight().c_str());
 		return (INT_PTR)TRUE;
-
 	case WM_COMMAND:
 		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
 		{

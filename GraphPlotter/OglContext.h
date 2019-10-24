@@ -27,5 +27,7 @@ public:
 	void initGraph(void);
 	void decMultiplier(void);
 	void incMultiplier(void);
+	std::string getWidth(void);
+	std::string getHeight(void);
 };
 
