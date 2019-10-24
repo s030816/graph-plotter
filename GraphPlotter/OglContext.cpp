@@ -104,11 +104,21 @@ display()
 	glClear(GL_COLOR_BUFFER_BIT);
 	glBegin(GL_LINES);
 	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex2i(-1, 0.5);
-	glVertex2i(1, 0.5);
+	glVertex2i(-1, 0);
+	glVertex2i(1, 0);
 
-	glVertex2i(0.5, 1);
-	glVertex2i(0.5, -1);
+	glVertex2i(0, 1);
+	glVertex2i(0, -1);
+	glEnd();
+
+	glPointSize(1.0f);
+
+	glBegin(GL_POINTS);
+	glColor3f(1.0f, 0.0f, 1.0f);
+	glVertex2f(0.0f, 0.0f);
+	glVertex2f(0.005f, 0.005f);
+	glVertex2f(0.01f, 0.01f);
+	glVertex2f(0.015f, 0.015f);
 	glEnd();
 	//glFlush();
 }
