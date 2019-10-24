@@ -227,11 +227,24 @@ INT_PTR CALLBACK Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 		SetDlgItemTextA(hDlg, IDC_EDIT1, ogl->getWidth().c_str());
 		SetDlgItemTextA(hDlg, IDC_EDIT2, ogl->getHeight().c_str());
 		return (INT_PTR)TRUE;
+
 	case WM_COMMAND:
-		if (LOWORD(wParam) == IDOK || LOWORD(wParam) == IDCANCEL)
+		switch(LOWORD(wParam))
 		{
+		case IDOK:
+			{
+				char width[6];
+				char height[6];
+				GetDlgItemTextA(hDlg, IDC_EDIT1, width, 5);
+				GetDlgItemTextA(hDlg, IDC_EDIT2, height, 5);
+				//MessageBoxA(nullptr, tmp, "test", MB_OK);
+				ogl->setOglWinSize(width, height);
+			}
+		case IDCANCEL:
 			EndDialog(hDlg, LOWORD(wParam));
 			return (INT_PTR)TRUE;
+		default:
+			break;
 		}
 		break;
 	}

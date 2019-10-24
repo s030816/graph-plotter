@@ -48,7 +48,8 @@ ATOM OglContext::RegisterWinClass(WNDPROC WndProc)
 
 BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND phwnd)
 {
-	this->hWnd = CreateWindowW(this->szWindowClass, this->szTitle, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
+	this->hWnd = CreateWindowW(this->szWindowClass, this->szTitle, 
+		WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
 		CW_USEDEFAULT, 0, width, height, phwnd, nullptr, this->hInstance, nullptr);
 	this->width = width;
 	this->height = height;
@@ -166,6 +167,16 @@ std::string OglContext::getWidth(void)
 std::string OglContext::getHeight(void)
 {
 	return std::to_string(this->height);
+}
+
+void OglContext::setOglWinSize(char * width, char * height)
+{
+	this->width = std::stoi(std::string(width));
+	this->height = std::stoi(std::string(height));
+	SetWindowPos(this->hWnd, HWND_TOP, 0, 0, this->width, this->height,
+		SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE);
+	this->initGraph();
+	this->display();
 }
 
 LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

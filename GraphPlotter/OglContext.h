@@ -29,5 +29,6 @@ public:
 	void incMultiplier(void);
 	std::string getWidth(void);
 	std::string getHeight(void);
+	void setOglWinSize(char *width, char *height);
 };
 
