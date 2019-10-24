@@ -141,6 +141,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Controls.h" />
     <ClInclude Include="GraphPlotter.h" />
     <ClInclude Include="OglContext.h" />
     <ClInclude Include="Resource.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="GraphPlotter.cpp" />
     <ClCompile Include="OglContext.cpp" />
     <ClCompile Include="stdafx.cpp">

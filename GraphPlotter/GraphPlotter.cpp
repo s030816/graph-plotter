@@ -6,13 +6,12 @@
 #include "OglContext.h"
 
 #define MAX_LOADSTRING 100
-#define MAX_INFO 4096
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
-WCHAR aboutInfo[MAX_INFO];
+WCHAR aboutInfo[MAX_LOADSTRING];
 HWND hWND;
 OglContext *ogl;
 
@@ -32,12 +31,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: Place code here.
 	ogl = new OglContext(hInstance);
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_GRAPHPLOTTER, szWindowClass, MAX_LOADSTRING);
-	LoadStringW(hInstance, IDS_STRING104, aboutInfo, MAX_INFO);
+	LoadStringW(hInstance, IDS_STRING104, aboutInfo, MAX_LOADSTRING);
+
     MyRegisterClass(hInstance);
 	ogl->RegisterWinClass(&OglProc);
 
@@ -124,8 +123,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // Store instance handle in our global variable
 
-  hWND = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+  hWND = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME,
+      CW_USEDEFAULT, 0, 1000, 800, nullptr, nullptr, hInstance, nullptr);
 
    if (!(hWND))
    {
@@ -142,10 +141,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  FUNCTION: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
 //  PURPOSE:  Processes messages for the main window.
-//
-//  WM_COMMAND  - process the application menu
-//  WM_PAINT    - Paint the main window
-//  WM_DESTROY  - post a quit message and return
 //
 //
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -203,7 +198,6 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_INITDIALOG:
-		SetDlgItemText(hDlg, IDC_STATIC, L"Copyright (C) <year>  <name of author>");
         return (INT_PTR)TRUE;
 
     case WM_COMMAND:
@@ -237,7 +231,6 @@ INT_PTR CALLBACK Properties(HWND hDlg, UINT message, WPARAM wParam, LPARAM lPara
 				char height[6];
 				GetDlgItemTextA(hDlg, IDC_EDIT1, width, 5);
 				GetDlgItemTextA(hDlg, IDC_EDIT2, height, 5);
-				//MessageBoxA(nullptr, tmp, "test", MB_OK);
 				ogl->setOglWinSize(width, height);
 			}
 		case IDCANCEL:
