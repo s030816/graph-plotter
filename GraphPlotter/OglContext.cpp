@@ -50,6 +50,8 @@ BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND ph
 {
 	this->hWnd = CreateWindowW(this->szWindowClass, this->szTitle, WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
 		CW_USEDEFAULT, 0, width, height, phwnd, nullptr, this->hInstance, nullptr);
+	this->width = width;
+	this->height = height;
 
 	if (!(this->hWnd))
 	{
@@ -130,11 +132,30 @@ void OglContext::display(void)
 
 void OglContext::initGraph(void)
 {
-	GLfloat i = -100;
-	for (GLfloat x = -1.0f; x < 1.005f; x += 0.005f, i += 1.0f)
+	GLfloat i = -(this->width/2);
+	GLfloat limit = 1.0f + 1.0f / width;
+	GLfloat increment = 1.0f / width;
+	this->graph.clear();
+	for (GLfloat x = -1.0f; x < 1.005f; x += increment, i += 1.0f)
 	{
-		this->graph.emplace_back(std::make_pair(x,std::sinf(x*10)*0.5f));
+		this->graph.emplace_back(std::make_pair(x,std::cosf(x*this->multiplier)*0.5f));
 	}
+}
+
+void OglContext::decMultiplier(void)
+{
+	this->multiplier /= 2.0f;
+	this->initGraph();
+	this->display();
+	PostMessage(this->hWnd, WM_PAINT, 0, 0);
+}
+
+void OglContext::incMultiplier(void)
+{
+	this->multiplier *= 2.0f;
+	this->initGraph();
+	this->display();
+	PostMessage(this->hWnd, WM_PAINT, 0, 0);
 }
 
 LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

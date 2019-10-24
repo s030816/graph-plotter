@@ -12,6 +12,9 @@ private:
 	HDC hDC;
 	HGLRC hRC;
 	std::vector<std::pair<GLfloat, GLfloat> > graph;
+	UINT16 width;
+	UINT16 height;
+	GLfloat multiplier{10.0f};
 
 	void errorMsg(const char *err);
 public:
@@ -22,5 +25,7 @@ public:
 	BOOL InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND phwnd);
 	void display(void);
 	void initGraph(void);
+	void decMultiplier(void);
+	void incMultiplier(void);
 };
 

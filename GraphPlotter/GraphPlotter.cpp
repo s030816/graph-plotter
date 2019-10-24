@@ -12,6 +12,7 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 HWND hWND;
+OglContext *ogl;
 
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -29,12 +30,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
-	OglContext ogl(hInstance);
+	ogl = new OglContext(hInstance);
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_GRAPHPLOTTER, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
-	ogl.RegisterWinClass(&OglProc);
+	ogl->RegisterWinClass(&OglProc);
 
 
     // Perform application initialization:
@@ -43,9 +44,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-	ogl.InitInstance(nCmdShow, 400, 400, hWND);
-	ogl.initGraph();
-	ogl.display();
+	ogl->InitInstance(nCmdShow, 400, 400, hWND);
+	ogl->initGraph();
+	ogl->display();
 	/*
 	hDC = GetDC(hWND);
 	hRC = wglCreateContext(hDC);
@@ -65,7 +66,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
     }
-	ogl.~OglContext();
+	ogl->~OglContext();
+	delete ogl;
 	/*
 	wglMakeCurrent(NULL, NULL);
 	ReleaseDC(hWND,hDC);
@@ -163,6 +165,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+	case WM_MOUSEWHEEL:
+		{
+			//MessageBoxA(NULL, "Test wheel", "Error", MB_OK);
+			short wmId = HIWORD(wParam);
+			// Parse the menu selections:
+			if (wmId > 0)
+			{
+				ogl->incMultiplier();
+			}
+			else
+			{
+				ogl->decMultiplier();
+			}
+		}
+		break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
