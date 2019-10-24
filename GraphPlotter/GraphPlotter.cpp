@@ -44,6 +44,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
 	ogl.InitInstance(nCmdShow, 400, 400, hWND);
+	ogl.initGraph();
+	ogl.display();
 	/*
 	hDC = GetDC(hWND);
 	hRC = wglCreateContext(hDC);

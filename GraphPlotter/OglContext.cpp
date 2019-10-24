@@ -97,8 +97,7 @@ BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND ph
 	return TRUE;
 }
 
-void
-display()
+void OglContext::display(void)
 {
 	//MessageBoxA(NULL, "display", "Error", MB_OK);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -112,15 +111,30 @@ display()
 	glEnd();
 
 	glPointSize(1.0f);
-
 	glBegin(GL_POINTS);
 	glColor3f(1.0f, 0.0f, 1.0f);
+	/*
 	glVertex2f(0.0f, 0.0f);
 	glVertex2f(0.005f, 0.005f);
 	glVertex2f(0.01f, 0.01f);
 	glVertex2f(0.015f, 0.015f);
+	*/
+	for (auto& i : this->graph)
+	{
+		glVertex2f(i.first, i.second);
+	}
 	glEnd();
+	//PostMessage(hWnd, WM_PAINT, 0, 0);
 	//glFlush();
+}
+
+void OglContext::initGraph(void)
+{
+	GLfloat i = -100;
+	for (GLfloat x = -1.0f; x < 1.005f; x += 0.005f, i += 1.0f)
+	{
+		this->graph.emplace_back(std::make_pair(x,std::sinf(x*10)*0.5f));
+	}
 }
 
 LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -136,7 +150,7 @@ LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		PAINTSTRUCT ps;
 		HDC hdc = BeginPaint(hWnd, &ps);
-		display();
+		//OglContext::display();
 		SwapBuffers(hdc);
 		//BeginPaint(hWnd, &ps);
 		//EndPaint(hWnd, &ps);

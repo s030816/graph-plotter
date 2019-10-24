@@ -11,6 +11,7 @@ private:
 	WCHAR *szWindowClass = L"test2";
 	HDC hDC;
 	HGLRC hRC;
+	std::vector<std::pair<GLfloat, GLfloat> > graph;
 
 	void errorMsg(const char *err);
 public:
@@ -19,5 +20,7 @@ public:
 
 	ATOM RegisterWinClass(WNDPROC WndProc);
 	BOOL InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND phwnd);
+	void display(void);
+	void initGraph(void);
 };
 
