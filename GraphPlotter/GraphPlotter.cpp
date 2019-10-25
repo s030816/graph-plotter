@@ -50,7 +50,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	ogl->InitInstance(nCmdShow, 800, 400, hWND);
 	ogl->initControls();
-	ogl->addEditControl(20, 50, 200, 20);
+	ogl->addEditControl(20, 50, 200, 30);
 	ogl->initGraph();
 	ogl->display();
 	
@@ -128,7 +128,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    hInst = hInstance; // Store instance handle in our global variable
 
   hWND = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME,
-      CW_USEDEFAULT, 0, 1000, 800, nullptr, nullptr, hInstance, nullptr);
+      CW_USEDEFAULT, 0, 850, 800, nullptr, nullptr, hInstance, nullptr);
 
    if (!(hWND))
    {
@@ -185,6 +185,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 				ogl->decMultiplier();
 			}
 		}
+		break;
+	case WM_SIZE:
+		ogl->display();
 		break;
     case WM_DESTROY:
         PostQuitMessage(0);

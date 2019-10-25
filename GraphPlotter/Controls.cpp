@@ -26,6 +26,11 @@ void Controls::addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos,
 		(HMENU)(this->cntrls.size() + 200),
 		this->hInstance,
 		NULL);  
+	if (!hwndc)
+	{
+		MessageBoxA(nullptr, "Cannot create control", "Error", MB_OK);
+		return;
+	}
 	ControlsData cData;
 	cData.hWnd = hwndc;
 	cData.id = (HMENU)(this->cntrls.size() + 200);
