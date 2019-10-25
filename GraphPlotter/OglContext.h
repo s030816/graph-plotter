@@ -7,6 +7,7 @@ class OglContext
 private:
 	HINSTANCE hInstance;
 	HWND hWnd;
+	HWND phWnd;
 	WCHAR *szTitle = L"test1";
 	WCHAR *szWindowClass = L"test2";
 	HDC hDC;
@@ -14,7 +15,8 @@ private:
 	std::vector<std::pair<GLfloat, GLfloat> > graph;
 	UINT16 width;
 	UINT16 height;
-	GLfloat multiplier{10.0f};
+	GLfloat multiplier{ 10.0f };
+	Controls* cntrls;
 
 	void errorMsg(const char *err);
 public:
@@ -30,5 +32,7 @@ public:
 	std::string getWidth(void);
 	std::string getHeight(void);
 	void setOglWinSize(char *width, char *height);
+	void initControls(void);
+	void addEditControl(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height);
 };
 

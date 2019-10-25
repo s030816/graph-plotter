@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "GraphPlotter.h"
+#include "Controls.h"
 #include "OglContext.h"
 
 #define MAX_LOADSTRING 100
@@ -47,9 +48,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return FALSE;
     }
 
-	ogl->InitInstance(nCmdShow, 400, 400, hWND);
+	ogl->InitInstance(nCmdShow, 800, 400, hWND);
+	ogl->initControls();
+	ogl->addEditControl(20, 50, 200, 20);
 	ogl->initGraph();
 	ogl->display();
+	
 	/*
 	hDC = GetDC(hWND);
 	hRC = wglCreateContext(hDC);

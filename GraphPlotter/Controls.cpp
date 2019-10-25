@@ -1,8 +1,10 @@
 #include "stdafx.h"
 #include "Controls.h"
 
-Controls::Controls()
+Controls::Controls(HWND hWnd, HINSTANCE hInstance)
 {
+	this->hWnd = hWnd;
+	this->hInstance = hInstance;
 }
 
 Controls::~Controls()
@@ -14,7 +16,7 @@ void Controls::addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos,
 {
 	HWND hwndc = CreateWindow(
 		type,  // Predefined class; Unicode assumed 
-		text,      // Button text 
+		text,      //  text 
 		WS_CHILD | styles,  // Styles 
 		xpos,         // x position 
 		ypos,         // y position 
@@ -31,8 +33,3 @@ void Controls::addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos,
 	this->cntrls.emplace_back(cData);
 }
 
-void Controls::setParent(HWND hWnd, HINSTANCE hInstance)
-{
-	this->hWnd = hWnd;
-	this->hInstance = hInstance;
-}

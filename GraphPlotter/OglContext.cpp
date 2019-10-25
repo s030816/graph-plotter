@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Controls.h"
 #include "OglContext.h"
 #include "GraphPlotter.h"
 
@@ -19,6 +20,11 @@ OglContext::OglContext(HINSTANCE hInstance)
 
 OglContext::~OglContext()
 {
+	if (this->cntrls)
+	{
+		delete this->cntrls;
+		this->cntrls = nullptr;
+	}
 	wglMakeCurrent(NULL, NULL);
 	ReleaseDC(this->hWnd, this->hDC);
 	wglDeleteContext(this->hRC);
@@ -51,8 +57,10 @@ BOOL OglContext::InitInstance(int nCmdShow, UINT16 width, UINT16 height, HWND ph
 	this->hWnd = CreateWindowW(this->szWindowClass, this->szTitle, 
 		WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_VISIBLE,
 		CW_USEDEFAULT, 0, width, height, phwnd, nullptr, this->hInstance, nullptr);
+
 	this->width = width;
 	this->height = height;
+	this->phWnd = phwnd;
 
 	if (!(this->hWnd))
 	{
@@ -177,6 +185,22 @@ void OglContext::setOglWinSize(char * width, char * height)
 		SWP_NOZORDER | SWP_NOOWNERZORDER | SWP_NOMOVE);
 	this->initGraph();
 	this->display();
+}
+
+void OglContext::initControls()
+{
+	cntrls = new Controls(this->phWnd,this->hInstance);
+}
+
+void OglContext::addEditControl(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height)
+{
+	if (!this->cntrls)
+	{
+		this->errorMsg("Uninitialized controls");
+		return;
+	}
+	this->cntrls->addControls(L"EDIT", nullptr, xpos, this->height + ypos, width, height,
+		WS_VISIBLE | WS_BORDER | ES_LEFT, std::string("edit_control1"));
 }
 
 LRESULT CALLBACK OglProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)

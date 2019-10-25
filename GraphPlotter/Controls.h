@@ -18,11 +18,10 @@ private:
 	HWND hWnd;
 	HINSTANCE hInstance;
 public:
-	Controls();
+	Controls(HWND hWnd, HINSTANCE hInstance);
 	virtual ~Controls();
 
 	void addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos,
 		UINT16 width, UINT16 height, UINT32 styles, std::string& name);
-	void setParent(HWND hWnd, HINSTANCE hInstance);
 };
 
