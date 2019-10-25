@@ -3,10 +3,11 @@
 
 #include "stdafx.h"
 #include "GraphPlotter.h"
+#include "Calculator.h"
 #include "Controls.h"
 #include "OglContext.h"
 
-#include "Calculator.h"
+
 
 #define MAX_LOADSTRING 100
 
@@ -57,9 +58,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	ogl->display();
 	
 	//test
-	Calculator calc;
-	std::string tt = "(5 - x) * x";
-	calc.parser(tt);
+	//Calculator calc;
+	//std::string tt = "(5 - x) * x";
+	//calc.parser(tt);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GRAPHPLOTTER));
 
@@ -155,21 +156,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
-            // Parse the menu selections:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-			case ID_FILE_PROPERTIES:
-				DialogBox(hInst, MAKEINTRESOURCE(IDD_CUSTOM_WIN), hWnd, Properties);
-				break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+			if (!ogl->parseControlSelections(wmId))
+			{
+				// Parse the menu selections:
+				switch (wmId)
+				{
+				case IDM_ABOUT:
+					DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+					break;
+				case ID_FILE_PROPERTIES:
+					DialogBox(hInst, MAKEINTRESOURCE(IDD_CUSTOM_WIN), hWnd, Properties);
+					break;
+				case IDM_EXIT:
+					DestroyWindow(hWnd);
+					break;
+				default:
+					return DefWindowProc(hWnd, message, wParam, lParam);
+				}
+			}
         }
         break;
 	case WM_MOUSEWHEEL:

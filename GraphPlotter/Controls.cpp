@@ -12,7 +12,7 @@ Controls::~Controls()
 }
 
 void Controls::addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos, 
-	UINT16 width, UINT16 height, UINT32 styles, std::string& name)
+	UINT16 width, UINT16 height, UINT32 styles, UINT16 id)
 {
 	HWND hwndc = CreateWindow(
 		type,  // Predefined class; Unicode assumed 
@@ -33,8 +33,30 @@ void Controls::addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos,
 	}
 	ControlsData cData;
 	cData.hWnd = hwndc;
-	cData.id = (HMENU)(this->cntrls.size() + 200);
-	cData.name = name;
+	cData.id = this->cntrls.size() + 200;
+	cData.idName = id;
 	this->cntrls.emplace_back(cData);
+}
+
+std::string Controls::getEditText(UINT16 id)
+{
+	char buff[50];
+	auto iter = std::find_if(this->cntrls.begin(),
+		this->cntrls.end(), [&](const auto& i) {return i.idName == id; });
+	if (iter == this->cntrls.end())
+	{
+		MessageBoxA(nullptr, "No sych control exist", "Error", MB_OK);
+	}
+	GetWindowTextA(iter->hWnd, buff, 50);
+	return std::string(buff);
+}
+
+UINT16 Controls::getControl(int wmId)
+{
+	auto iter = std::find_if(this->cntrls.begin(),
+		this->cntrls.end(), [&](const auto& i) {return i.id == wmId; });
+	if (iter == this->cntrls.end())
+		return 0;
+	return iter->idName;
 }
 

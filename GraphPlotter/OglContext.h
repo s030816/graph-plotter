@@ -17,6 +17,7 @@ private:
 	UINT16 height;
 	GLfloat multiplier{ 10.0f };
 	Controls* cntrls;
+	Calculator calc;
 
 	void errorMsg(const char *err);
 public:
@@ -34,5 +35,6 @@ public:
 	void setOglWinSize(char *width, char *height);
 	void initControls(void);
 	void addEditControls(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height, UINT16 count);
+	bool parseControlSelections(int wmId);
 };
 

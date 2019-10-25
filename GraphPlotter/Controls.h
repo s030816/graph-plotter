@@ -6,9 +6,9 @@
 
 struct ControlsData
 {
-	std::string name;
+	UINT16 idName;
 	HWND hWnd;
-	HMENU id;
+	int id;
 };
 
 class Controls
@@ -22,6 +22,8 @@ public:
 	virtual ~Controls();
 
 	void addControls(WCHAR *type, WCHAR *text, UINT16 xpos, UINT16 ypos,
-		UINT16 width, UINT16 height, UINT32 styles, std::string& name);
+		UINT16 width, UINT16 height, UINT32 styles, UINT16 id);
+	std::string getEditText(UINT16 id);
+	UINT16 getControl(int wmId);
 };
 

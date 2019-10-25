@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Controls.h"
+#include "Calculator.h"
 #include "OglContext.h"
 #include "GraphPlotter.h"
 
@@ -145,9 +146,9 @@ void OglContext::initGraph(void)
 	GLfloat limit = 1.0f + 1.0f / this->width;
 	GLfloat increment = 1.0f / this->width;
 	this->graph.clear();
-	for (GLfloat x = -1.0f; x < 1.005f; x += increment, i += 1.0f)
+	for (GLfloat x = -1.0f; x < limit; x += increment, i += 1.0f)
 	{
-		this->graph.emplace_back(std::make_pair(x,std::cosf(x*this->multiplier)*0.5f));
+		this->graph.emplace_back(std::make_pair(x,this->calc.eval_expr(x*this->multiplier)));
 	}
 }
 
@@ -199,16 +200,31 @@ void OglContext::addEditControls(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 
 		this->errorMsg("Uninitialized controls");
 		return;
 	}
-	for (UINT16 i = 0; i < count; ++i)
+	for (UINT16 i = 0, id = 1; i < count; ++i, id+=2)
 	{
 		this->cntrls->addControls(L"EDIT", nullptr, xpos, this->height + 20 + ypos*i,
 			width, height, WS_VISIBLE | WS_BORDER | ES_LEFT, 
-			std::string("edit_control" + std::to_string(i)));
+			id);
 		this->cntrls->addControls(L"BUTTON", L"Draw", xpos * 2 + width, this->height + 20 + ypos*i, 
 			50, height, WS_TABSTOP | BS_DEFPUSHBUTTON | WS_VISIBLE, 
-			std::string("ec_button" + std::to_string(i)));
+			id+1);
 	}
 	
+}
+
+bool OglContext::parseControlSelections(int wmId)
+{
+	UINT16 tmp;
+	if ((tmp = this->cntrls->getControl(wmId)) && tmp % 2 == 0)
+	{
+		//MessageBoxA(nullptr, this->cntrls->getEditText(tmp - 1).c_str(), "test", MB_OK);
+		this->calc.parser(this->cntrls->getEditText(tmp - 1));
+		this->initGraph();
+		this->display();
+		PostMessage(this->hWnd, WM_PAINT, 0, 0);
+		return true;
+	}
+	return false;
 }
 
 

@@ -64,6 +64,10 @@ void Calculator::calc(std::vector<GLfloat>& stack, char op)
 
 GLfloat Calculator::eval_expr(GLfloat x)
 {
+	if (this->postfix.empty())
+	{
+		return -200.0f;
+	}
 	std::vector<GLfloat> stack;
 	for (auto& i : this->postfix)
 	{
@@ -120,6 +124,9 @@ void Calculator::lexer(std::string & func)
 
 void Calculator::parser(std::string & func)
 {
+	this->postfix.clear();
+	this->operands.clear();
+
 	char tmp;
 	this->removeSpaces(func);
 	this->lexer(func);
@@ -170,11 +177,13 @@ void Calculator::parser(std::string & func)
 			}
 		}
 	}
+	/*
 	std::string test;
 	for (auto& i : this->postfix)
 	{
 		test += i;
 	}
 	MessageBoxA(nullptr, test.c_str(), "test", MB_OK);
-	MessageBoxA(nullptr, std::to_string(this->eval_expr(3)).c_str(), "test", MB_OK);
+	*/
+	//MessageBoxA(nullptr, std::to_string(this->eval_expr(3)).c_str(), "test", MB_OK);
 }
