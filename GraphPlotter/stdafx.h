@@ -27,4 +27,7 @@
 #include <vector>
 #include <cmath>
 #include <string>
+#include <sstream>
+#include <algorithm>
+#include <cctype>
 

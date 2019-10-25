@@ -6,6 +6,8 @@
 #include "Controls.h"
 #include "OglContext.h"
 
+#include "Calculator.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -54,11 +56,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	ogl->initGraph();
 	ogl->display();
 	
-	/*
-	hDC = GetDC(hWND);
-	hRC = wglCreateContext(hDC);
-	wglMakeCurrent(hDC, hRC);
-	*/
+	//test
+	Calculator calc;
+	std::string tt = "a+b^c";
+	calc.parser(tt);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GRAPHPLOTTER));
 
