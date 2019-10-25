@@ -58,7 +58,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	
 	//test
 	Calculator calc;
-	std::string tt = "a+b^c";
+	std::string tt = "(5 - x) * x";
 	calc.parser(tt);
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_GRAPHPLOTTER));
