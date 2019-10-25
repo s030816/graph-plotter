@@ -192,17 +192,23 @@ void OglContext::initControls()
 	cntrls = new Controls(this->phWnd,this->hInstance);
 }
 
-void OglContext::addEditControl(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height)
+void OglContext::addEditControls(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height, UINT16 count)
 {
 	if (!this->cntrls)
 	{
 		this->errorMsg("Uninitialized controls");
 		return;
 	}
-	this->cntrls->addControls(L"EDIT", nullptr, xpos, this->height + ypos, width, height,
-		WS_VISIBLE | WS_BORDER | ES_LEFT, std::string("edit_control1"));
-	this->cntrls->addControls(L"BUTTON", L"Draw", xpos*2+width, this->height + ypos, 50, height,
-		WS_TABSTOP | BS_DEFPUSHBUTTON | WS_VISIBLE, std::string("ec_button1"));
+	for (UINT16 i = 0; i < count; ++i)
+	{
+		this->cntrls->addControls(L"EDIT", nullptr, xpos, this->height + 20 + ypos*i,
+			width, height, WS_VISIBLE | WS_BORDER | ES_LEFT, 
+			std::string("edit_control" + std::to_string(i)));
+		this->cntrls->addControls(L"BUTTON", L"Draw", xpos * 2 + width, this->height + 20 + ypos*i, 
+			50, height, WS_TABSTOP | BS_DEFPUSHBUTTON | WS_VISIBLE, 
+			std::string("ec_button" + std::to_string(i)));
+	}
+	
 }
 
 

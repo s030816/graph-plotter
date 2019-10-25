@@ -33,6 +33,6 @@ public:
 	std::string getHeight(void);
 	void setOglWinSize(char *width, char *height);
 	void initControls(void);
-	void addEditControl(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height);
+	void addEditControls(UINT16 xpos, UINT16 ypos, UINT16 width, UINT16 height, UINT16 count);
 };
 

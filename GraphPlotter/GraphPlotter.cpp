@@ -50,7 +50,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	ogl->InitInstance(nCmdShow, 800, 400, hWND);
 	ogl->initControls();
-	ogl->addEditControl(20, 50, 200, 30);
+	ogl->addEditControls(20, 50, 200, 30, 5);
 	ogl->initGraph();
 	ogl->display();
 	
